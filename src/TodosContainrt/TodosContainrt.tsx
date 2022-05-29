@@ -37,6 +37,7 @@ interface Item {
 type Props = {
   rows: Item[];
   setRows: (ref: any) => void;
+  filterView: () => void;
 };
 type Complete = {
   isComplete: boolean;
@@ -61,7 +62,7 @@ const changeTimeForm = (time: number): string => {
   }
 };
 
-const TodosContainer: React.FC<Props> = ({ rows, setRows }) => {
+const TodosContainer: React.FC<Props> = ({ rows, setRows, filterView }) => {
   function handleComplete(target: Item) {
     if (target.completeTime !== 0) return;
     let tempRows = [...JSON.parse(localStorage.getItem("todos"))] || [];
@@ -75,7 +76,7 @@ const TodosContainer: React.FC<Props> = ({ rows, setRows }) => {
     current = { ...current, completeTime: Date.now() };
     tempRows.splice(rmIndex, 1, current);
     localStorage.setItem("todos", JSON.stringify(tempRows));
-    setRows(tempRows);
+    filterView();
   }
 
   function handleDelete(e: any, target: Item) {
@@ -84,6 +85,7 @@ const TodosContainer: React.FC<Props> = ({ rows, setRows }) => {
     if (isDelete) {
       let tempRows = [...JSON.parse(localStorage.getItem("todos"))] || [];
       let rmIndex;
+
       let current = tempRows.find((item, index) => {
         if (item.createTime === target.createTime) {
           rmIndex = index;
@@ -92,7 +94,7 @@ const TodosContainer: React.FC<Props> = ({ rows, setRows }) => {
       });
       tempRows.splice(rmIndex, 1);
       localStorage.setItem("todos", JSON.stringify(tempRows));
-      setRows(tempRows);
+      filterView();
     }
   }
 

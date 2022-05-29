@@ -40,21 +40,21 @@ const SwitchBar: React.FC<Props> = ({ currentState, setCurrentState }) => {
           htmlFor="all"
           onClick={() => setCurrentState("all")}
         >
-          Show all todos
+          All
         </Label>
         <Label
           isActive={currentState === "done"}
           htmlFor="done"
           onClick={() => setCurrentState("done")}
         >
-          Show done todos
+          Done
         </Label>
         <Label
           isActive={currentState === "undone"}
           htmlFor="undone"
           onClick={() => setCurrentState("undone")}
         >
-          Show undone todos
+          Undone
         </Label>
       </SwitchBox>
     </div>

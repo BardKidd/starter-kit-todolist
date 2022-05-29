@@ -32,16 +32,14 @@ const Button = styled.button`
 
 type Props = {
   newTodo: string;
-  rows: Array<object>;
   setNewTodo: (ref: any) => void;
-  setRows: (ref: any) => void;
+  filterView: () => void;
 };
 
 function handleAddNewTodo(
   newTodo: string,
   setNewTodo: (ref: any) => void,
-  rows: Array<object>,
-  setRows: (ref: any) => void
+  filterView: () => void
 ) {
   if (!newTodo) alert("Please enter something...");
   const sendData = {
@@ -49,18 +47,17 @@ function handleAddNewTodo(
     createTime: Date.now(),
     completeTime: 0,
   };
-  let tempRows = [...rows];
-  tempRows = [...rows, sendData];
-  setRows(tempRows);
+  let tempRows = JSON.parse(localStorage.getItem("todos")) || [];
+  tempRows = [...tempRows, sendData];
   localStorage.setItem("todos", JSON.stringify(tempRows));
+  filterView();
   setNewTodo("");
 }
 
 const AddNewItemBar: React.FC<Props> = ({
   newTodo,
   setNewTodo,
-  rows,
-  setRows,
+  filterView,
 }) => {
   return (
     <AddNewItemBox>
@@ -72,7 +69,7 @@ const AddNewItemBar: React.FC<Props> = ({
       />
       <Button
         type="button"
-        onClick={() => handleAddNewTodo(newTodo, setNewTodo, rows, setRows)}
+        onClick={() => handleAddNewTodo(newTodo, setNewTodo, filterView)}
       >
         Add
       </Button>
