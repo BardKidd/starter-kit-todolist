@@ -20,7 +20,7 @@ const Header: React.FC = () => {
       <HeaderH1>
         TODO <ListSpan>LIST</ListSpan>
       </HeaderH1>
-      <DesiribeP>Please enter your todo list.</DesiribeP>
+      <DesiribeP>Left click to finish. Right click to delete.</DesiribeP>
     </>
   );
 };

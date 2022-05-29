@@ -26,18 +26,56 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   border-radius: 0 5px 5px 0;
+  padding: 5px 8px;
+  font-size: 1.25rem;
 `;
 
 type Props = {
   newTodo: string;
+  rows: Array<object>;
   setNewTodo: (ref: any) => void;
+  setRows: (ref: any) => void;
 };
 
-const AddNewItemBar: React.FC<Props> = () => {
+function handleAddNewTodo(
+  newTodo: string,
+  setNewTodo: (ref: any) => void,
+  rows: Array<object>,
+  setRows: (ref: any) => void
+) {
+  if (!newTodo) alert("Please enter something...");
+  const sendData = {
+    content: newTodo.trim(),
+    createTime: Date.now(),
+    completeTime: 0,
+  };
+  let tempRows = [...rows];
+  tempRows = [...rows, sendData];
+  setRows(tempRows);
+  localStorage.setItem("todos", JSON.stringify(tempRows));
+  setNewTodo("");
+}
+
+const AddNewItemBar: React.FC<Props> = ({
+  newTodo,
+  setNewTodo,
+  rows,
+  setRows,
+}) => {
   return (
     <AddNewItemBox>
-      <Input type="text" placeholder="Enter something..." />
-      <Button type="button">Add</Button>
+      <Input
+        type="text"
+        placeholder="Enter something..."
+        value={newTodo}
+        onChange={(e) => setNewTodo(e.target.value)}
+      />
+      <Button
+        type="button"
+        onClick={() => handleAddNewTodo(newTodo, setNewTodo, rows, setRows)}
+      >
+        Add
+      </Button>
     </AddNewItemBox>
   );
 };

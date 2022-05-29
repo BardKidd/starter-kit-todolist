@@ -6,7 +6,6 @@ type active = {
 
 const SwitchBox = styled.div`
   display: inline-block;
-  border: 1px solid #b0bec5;
   border-radius: 5px;
 `;
 const Input = styled.input`
@@ -14,13 +13,14 @@ const Input = styled.input`
 `;
 const Label = styled.label<active>`
   margin: 0 auto;
-  padding: 8px 10px;
+  padding: 5px 8px;
   font-size: 1.25rem;
-  line-height: 2;
+  line-height: 1.25;
   background-color: ${(props) => (props.isActive ? "#b0bec5" : "none")};
   cursor: pointer;
-  transition: 0.125s;
+  transition: 0.25s;
   border-radius: 5px;
+  display: inline-block;
 `;
 
 type Props = {
@@ -28,20 +28,32 @@ type Props = {
   setCurrentState: (ref: any) => void;
 };
 
-const SwitchBar: React.FC<Props> = () => {
+const SwitchBar: React.FC<Props> = ({ currentState, setCurrentState }) => {
   return (
     <div style={{ width: "100%", textAlign: "center" }}>
       <SwitchBox>
         <Input type="radio" name="switch" id="all" value="all" />
         <Input type="radio" name="switch" id="done" value="done" />
         <Input type="radio" name="switch" id="undone" value="undone" />
-        <Label isActive={true} htmlFor="all">
+        <Label
+          isActive={currentState === "all"}
+          htmlFor="all"
+          onClick={() => setCurrentState("all")}
+        >
           Show all todos
         </Label>
-        <Label isActive={false} htmlFor="done">
+        <Label
+          isActive={currentState === "done"}
+          htmlFor="done"
+          onClick={() => setCurrentState("done")}
+        >
           Show done todos
         </Label>
-        <Label isActive={false} htmlFor="undone">
+        <Label
+          isActive={currentState === "undone"}
+          htmlFor="undone"
+          onClick={() => setCurrentState("undone")}
+        >
           Show undone todos
         </Label>
       </SwitchBox>

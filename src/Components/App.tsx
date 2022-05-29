@@ -13,15 +13,23 @@ const LayoutStyle = styled.div`
 const App: React.FC = () => {
   const [newTodo, setNewTodo] = useState("");
   const [currentState, setCurrentState] = useState("all");
+  const [rows, setRows] = useState(
+    JSON.parse(localStorage.getItem("todos")) || []
+  );
   return (
     <LayoutStyle>
       <Header />
-      <AddNewItemBar newTodo={newTodo} setNewTodo={setNewTodo} />
+      <AddNewItemBar
+        rows={rows}
+        setRows={setRows}
+        newTodo={newTodo}
+        setNewTodo={setNewTodo}
+      />
       <SwitchBar
         currentState={currentState}
         setCurrentState={setCurrentState}
       />
-      <TodosContainer />
+      <TodosContainer rows={rows} setRows={setRows} />
     </LayoutStyle>
   );
 };
