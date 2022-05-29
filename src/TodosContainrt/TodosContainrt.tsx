@@ -18,13 +18,15 @@ const Item = styled.div`
   width: 80%;
   margin: 0 auto;
   cursor: pointer;
+
   &:hover {
     background-color: #aeaeae;
     color: #fff;
   }
 `;
-const ItemTitle = styled.span`
+const ItemTitle = styled.span<Complete>`
   font-weight: bold;
+  text-decoration: ${(props) => (props.isComplete ? "line-through" : "")};
 `;
 interface Item {
   content: string;
@@ -35,6 +37,9 @@ interface Item {
 type Props = {
   rows: Item[];
   setRows: (ref: any) => void;
+};
+type Complete = {
+  isComplete: boolean;
 };
 
 const addZero = (time: number) => {
@@ -95,13 +100,15 @@ const TodosContainer: React.FC<Props> = ({ rows, setRows }) => {
     <TodosBox>
       {rows.map((item) => (
         <Item
-          key={item.completeTime}
+          key={item.createTime}
           onClick={() => handleComplete(item)}
           onContextMenu={(e) => {
             handleDelete(e, item);
           }}
         >
-          <ItemTitle>{item.content}</ItemTitle>
+          <ItemTitle isComplete={item.completeTime > 0}>
+            {item.content}
+          </ItemTitle>
           <span>{changeTimeForm(item.completeTime)}</span>
         </Item>
       ))}
